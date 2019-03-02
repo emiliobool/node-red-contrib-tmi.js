@@ -11,7 +11,9 @@
       "twitchjs-api": "lib/twitchjs-api.js"
     }
   },
-  "node":">=4",
+  "engines": {
+    "node": ">=6"
+  },
   "dependencies": {
     "twitch-js": "^2.0.0-beta.30"
   },

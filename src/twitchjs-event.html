@@ -47,6 +47,18 @@
   .twitchjs_node_label {
     fill: #fff;
   }
+  .twitchjs-event-checkbox{
+    margin-left: 20px !important; 
+    vertical-align: top !important; 
+    width: auto !important;
+    margin-right: 5px !important;
+  }
+  .twitchjs-event-right-label{
+    width: auto !important;
+  }
+  .twitchjs-event-level1-label{
+    margin-left: 20px !important;
+  }
 </style>
 <script type="text/html" data-template-name="twitchjs-event">
   <div class="form-row">
@@ -58,40 +70,40 @@
       <select id="node-input-event"></select>
   </div>
   <div class="form-row">
-  <p><strong>Filters</strong></p>
-  <label for="node-input-filter_active">Active</label>
-      <input type="checkbox" id="node-input-filter_active">
+  <p><strong>RegEx Filters</strong></p>
+      <input type="checkbox" id="node-input-filter_active" class="twitchjs-event-checkbox">
+    <label for="node-input-filter_active" class="twitchjs-event-right-label">Active</label>
   </div>
   <div class="form-row">
-  <label for="node-input-filter_active">Type</label>
+  <label for="node-input-filter_active" class="twitchjs-event-level1-label">Type</label>
     <select id="node-input-filter_type">
       <option>AND</option>
       <option>OR</option>
     </select>
 </div>
   <div class="form-row">
-        <label for="node-input-filter_channel"><i class="icon-hash"></i> Channel</label>
-        <input type="text" id="node-input-filter_channel">
+        <label for="node-input-filter_channel" class="twitchjs-event-level1-label"> Channel</label>
+        <input type="text" id="node-input-filter_channel" placeholder="channel">
     </div>
     <div class="form-row">
-        <label for="node-input-filter_username"><i class="icon-hash"></i> Username</label>
-        <input type="text" id="node-input-filter_username">
+        <label for="node-input-filter_username"  class="twitchjs-event-level1-label"> Username</label>
+        <input type="text" id="node-input-filter_username" placeholder="username">
     </div>
     <div class="form-row">
-        <label for="node-input-filter_command"><i class="icon-hash"></i> Command</label>
-        <input type="text" id="node-input-filter_command"u>
+        <label for="node-input-filter_command"  class="twitchjs-event-level1-label"> Command</label>
+        <input type="text" id="node-input-filter_command" placeholder="PRIVMSG">
     </div>
     <div class="form-row">
-        <label for="node-input-filter_message"><i class="icon-hash"></i> Message</label>
-        <input type="text" id="node-input-filter_message">
+        <label for="node-input-filter_message" class="twitchjs-event-level1-label"> Message</label>
+        <input type="text" id="node-input-filter_message" placeholder="">
     </div>
     <div class="form-row">
-        <label for="node-input-filter_timestamp"><i class="icon-hash"></i> Timestamp</label>
-        <input type="text" id="node-input-filter_timestamp">
+        <label for="node-input-filter_timestamp" class="twitchjs-event-level1-label"> Timestamp</label>
+        <input type="text" id="node-input-filter_timestamp" placeholder="ISO date">
     </div>
     <div class="form-row">
-        <label for="node-input-filter_raw"><i class="icon-hash"></i> Raw Message</label>
-        <input type="text" id="node-input-filter_raw">
+        <label for="node-input-filter_raw"  class="twitchjs-event-level1-label"> Raw Message</label>
+        <input type="text" id="node-input-filter_raw" placeholder="mod=1|broadcaster/1">
     </div>
 </script>
 <script type="text/html" data-help-name="twitchjs-event">

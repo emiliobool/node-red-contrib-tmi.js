@@ -23,7 +23,7 @@
     "typescript": "^3.3.3333"
   },
   "scripts": {
-    "install": "",
+    "install": "npm run build",
     "watch": "gulp watch",
     "build": "gulp build",
     "test": "echo \"Error: no test specified\" && exit 1"

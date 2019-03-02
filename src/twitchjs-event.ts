@@ -27,6 +27,7 @@ module.exports = function(RED: Red) {
                 let filter = config[key]
                 if(filter){
                     let prop = key.split("_")[1]
+                    if(prop === "active" || prop === "type") continue
                     if(prop === "raw") prop = "_raw"
                     filters.push({ prop: prop, regex: new RegExp(filter)})
                 }

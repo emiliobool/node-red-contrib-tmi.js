@@ -57,6 +57,18 @@
   .twitchjs_node_label {
     fill: #fff;
   }
+  .twitchjs-commands-checkbox{
+    margin-left: 20px !important; 
+    vertical-align: top !important; 
+    width: auto !important;
+    margin-right: 5px !important;
+  }
+  .twitchjs-commands-right-label{
+    width: auto !important;
+  }
+  .twitchjs-commands-level1-label{
+    margin-left: 20px !important;
+  }
 </style>
 <script type="text/html" data-template-name="twitchjs-connect">
   <div class="form-row">
@@ -64,8 +76,8 @@
       <input type="text" id="node-input-client">
   </div>
   <div class="form-row">
-      <label for="node-input-auto"><i class="icon-tag"></i> Auto Connect</label>
-      <input type="checkbox" id="node-input-auto">
+      <input type="checkbox" id="node-input-auto" class="twitchjs-commands-checkbox">
+      <label for="node-input-auto" class="twitchjs-commands-right-label"> Auto Connect</label>
   </div>
 </script>
 
@@ -104,8 +116,8 @@
       <input type="text" id="node-input-payload">
   </div>
   <div class="form-row">
-      <label for="node-input-auto"><i class="icon-tag"></i> Auto Join on Connect</label>
-      <input type="checkbox" id="node-input-auto">
+      <input type="checkbox" id="node-input-auto" class="twitchjs-commands-checkbox">
+      <label for="node-input-auto" class="twitchjs-commands-right-label"> Auto Join on Connect</label>
   </div>
 </script>
 

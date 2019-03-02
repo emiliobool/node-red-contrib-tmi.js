@@ -11,15 +11,17 @@
       "twitchjs-api": "lib/twitchjs-api.js"
     }
   },
+  "node":">=4",
   "dependencies": {
     "twitch-js": "^2.0.0-beta.30"
   },
   "devDependencies": {
-    "del": "^3.0.0",
     "@types/node-red": "^0.17.3",
+    "del": "^3.0.0",
     "gulp": "^4.0.0",
     "gulp-inject-string": "^1.1.2",
     "gulp-typescript": "^5.0.0",
+    "node-red-node-test-helper": "^0.1.8",
     "typescript": "^3.3.3333"
   },
   "scripts": {

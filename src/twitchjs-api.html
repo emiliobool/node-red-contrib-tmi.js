@@ -1,0 +1,52 @@
+<script type="text/javascript">
+  let ChatConstants = { ChatConstants };
+  RED.nodes.registerType("twitchjs-api", {
+    category: "StreamingTools",
+    color: "#6441a5",
+    defaults: {
+      client: { type: "twitchjs-client" },
+      method: { value: "GET" },
+      topic: { value: "" },
+      payload: { value: "" }
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "node-red-GlitchIcon_White.png",
+    paletteLabel: "API",
+    label: function() {
+      return this.topic || "API";
+    },
+    labelStyle: "twitchjs_node_label"
+  });
+</script>
+<style>
+  #palette_node_twitchjs-api {
+    color: #fff;
+  }
+  .twitchjs_node_label {
+    fill: #fff;
+  }
+</style>
+<script type="text/html" data-template-name="twitchjs-api">
+  <div class="form-row">
+      <label for="node-input-client"><i class="icon-tag"></i> Config</label>
+      <input type="text" id="node-input-client">
+  </div>
+  <div class="form-row">
+        <label for="node-input-method"><i class="icon-tag"></i> Method</label>
+        <select id="node-input-method">
+            <option>GET</option>
+            <option>POST</option>
+            <option>PUT</option>
+        </select>
+    </div>
+  <div class="form-row">
+      <label for="node-input-topic"><i class="icon-tag"></i> Endpoint</label>
+      <input type="text" id="node-input-topic">
+  </div>
+  <!-- <div class="form-row">
+        <label for="node-input-payload"><i class="icon-tag"></i> Data</label>
+        <input type="text" id="node-input-payload">
+    </div> -->
+</script>
+<script type="text/html" data-help-name="twitchjs-api"></script>

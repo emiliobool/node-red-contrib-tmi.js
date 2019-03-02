@@ -1,0 +1,166 @@
+<script type="text/javascript">
+  let ChatConstants = { ChatConstants };
+  function registerType(command, outputs = 1) {
+    let label = command.charAt(0).toUpperCase() + command.slice(1);
+    let paletteLabel = label;
+    RED.nodes.registerType(`twitchjs-${command}`, {
+      category: "StreamingTools",
+      color: "#6441a5",
+      defaults: {
+        client: { type: "twitchjs-client" },
+        topic: { value: "" },
+        payload: { value: "" },
+        auto: { value: true }
+      },
+      icon: "node-red-GlitchIcon_White.png",
+      inputs: 1,
+      outputs: outputs,
+      labelStyle: "twitchjs_node_label",
+      paletteLabel,
+      label: function() {
+        if (this.payload) {
+          if (this.topic) {
+            return `${label}: ${this.topic} ${this.payload}`;
+          } else {
+            return `${label}: ${this.payload}`;
+          }
+        } else {
+          return `${label}`;
+        }
+      }
+    });
+  }
+
+  registerType("connect");
+  registerType("disconnect");
+  registerType("reconnect", 0);
+  registerType("send"); // raw message
+  registerType("join"); //
+  registerType("part", 0);
+  registerType("broadcast");
+  registerType("say");
+  registerType("whisper");
+</script>
+
+<style>
+  #palette_node_twitchjs-connect,
+  #palette_node_twitchjs-disconnect,
+  #palette_node_twitchjs-reconnect,
+  #palette_node_twitchjs-send,
+  #palette_node_twitchjs-join,
+  #palette_node_twitchjs-part,
+  #palette_node_twitchjs-broadcast,
+  #palette_node_twitchjs-say,
+  #palette_node_twitchjs-whisper {
+    color: #fff;
+  }
+  .twitchjs_node_label {
+    fill: #fff;
+  }
+</style>
+<script type="text/html" data-template-name="twitchjs-connect">
+  <div class="form-row">
+      <label for="node-input-client"><i class="icon-tag"></i> Config</label>
+      <input type="text" id="node-input-client">
+  </div>
+  <div class="form-row">
+      <label for="node-input-auto"><i class="icon-tag"></i> Auto Connect</label>
+      <input type="checkbox" id="node-input-auto">
+  </div>
+</script>
+
+<script type="text/html" data-template-name="twitchjs-disconnect">
+  <div class="form-row">
+      <label for="node-input-client"><i class="icon-tag"></i> Config</label>
+      <input type="text" id="node-input-client">
+  </div>
+</script>
+
+<script type="text/html" data-template-name="twitchjs-reconnect">
+  <div class="form-row">
+      <label for="node-input-client"><i class="icon-tag"></i> Config</label>
+      <input type="text" id="node-input-client">
+  </div>
+</script>
+
+<script type="text/html" data-template-name="twitchjs-send">
+  <div class="form-row">
+      <label for="node-input-client"><i class="icon-tag"></i> Config</label>
+      <input type="text" id="node-input-client">
+  </div>
+  <div class="form-row">
+      <label for="node-input-payload"><i class="icon-tag"></i> Raw Message</label>
+      <input type="text" id="node-input-payload">
+  </div>
+</script>
+
+<script type="text/html" data-template-name="twitchjs-join">
+  <div class="form-row">
+      <label for="node-input-client"><i class="icon-tag"></i> Config</label>
+      <input type="text" id="node-input-client">
+  </div>
+  <div class="form-row">
+      <label for="node-input-payload"><i class="icon-tag"></i> Channel</label>
+      <input type="text" id="node-input-payload">
+  </div>
+  <div class="form-row">
+      <label for="node-input-auto"><i class="icon-tag"></i> Auto Join on Connect</label>
+      <input type="checkbox" id="node-input-auto">
+  </div>
+</script>
+
+<script type="text/html" data-template-name="twitchjs-part">
+  <div class="form-row">
+      <label for="node-input-client"><i class="icon-tag"></i> Config</label>
+      <input type="text" id="node-input-client">
+  </div>
+  <div class="form-row">
+      <label for="node-input-payload"><i class="icon-tag"></i> Channel</label>
+      <input type="text" id="node-input-payload">
+  </div>
+</script>
+
+<script type="text/html" data-template-name="twitchjs-broadcast">
+  <div class="form-row">
+      <label for="node-input-client"><i class="icon-tag"></i> Config</label>
+      <input type="text" id="node-input-client">
+  </div>
+  <div class="form-row">
+      <label for="node-input-payload"><i class="icon-tag"></i> Message</label>
+      <input type="text" id="node-input-payload">
+  </div>
+</script>
+
+<script type="text/html" data-template-name="twitchjs-say">
+  <div class="form-row">
+      <label for="node-input-client"><i class="icon-tag"></i> Config</label>
+      <input type="text" id="node-input-client">
+  </div>
+  <div class="form-row">
+      <label for="node-input-topic"><i class="icon-tag"></i> Channel</label>
+    <input type="text" id="node-input-topic">
+  </div>
+  <div class="form-row">
+          <label for="node-input-payload"><i class="icon-tag"></i> Message</label>
+    <input type="text" id="node-input-payload">
+      </div>
+</script>
+
+<script type="text/html" data-template-name="twitchjs-whisper">
+  <div class="form-row">
+      <label for="node-input-client"><i class="icon-tag"></i> Config</label>
+      <input type="text" id="node-input-client">
+  </div>
+  <div class="form-row">
+      <label for="node-input-topic"><i class="icon-tag"></i> Username</label>
+    <input type="text" id="node-input-topic">
+  </div>
+  <div class="form-row">
+          <label for="node-input-payload"><i class="icon-tag"></i> Message</label>
+    <input type="text" id="node-input-payload">
+      </div>
+</script>
+
+<script type="text/html" data-help-name="twitchjs-event">
+  <p>Event node that fires on events</p>
+</script>

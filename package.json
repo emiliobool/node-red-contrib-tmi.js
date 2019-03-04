@@ -25,6 +25,7 @@
     "@types/node-red": "^0.17.3",
     "chai": "^4.2.0",
     "del": "^3.0.0",
+    "dotenv": "^6.2.0",
     "gulp": "^4.0.0",
     "gulp-inject-string": "^1.1.2",
     "gulp-typescript": "^5.0.0",

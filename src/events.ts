@@ -3,12 +3,10 @@ import { TwitchJsClientNode } from "./config";
 const TwitchJs = require("twitch-js")
 
 export interface TwitchJsEventConfig extends NodeProperties {
-    name: string;
     client: string;
     event: string;
-    [key: string]: string | boolean;
     filter_active: boolean;
-    filter_type: string;
+    filter_type: "AND" | "OR";
     filter_channel: string;
     filter_username: string;
     filter_command: string;
@@ -16,21 +14,25 @@ export interface TwitchJsEventConfig extends NodeProperties {
     filter_timestamp: string;
     filter_raw: string;
 }
+interface Filter{
+    prop: string;
+    regex: RegExp;
+}
 
 module.exports = function(RED: Red) {
     function TwitchJsEvent(this: Node, config: TwitchJsEventConfig) {
         RED.nodes.createNode(this, config);
         const clientNode = RED.nodes.getNode(config.client) as TwitchJsClientNode;
-        const filters:any = [];
+        const filters:Filter[] = [];
         let filtering = config.filter_active
         for(let key in config){
             if(key.startsWith("filter_")){
-                let filter = config[key]
+                let filter = (config as any)[key]
                 if(filter){
                     let prop = key.split("_")[1]
                     if(prop === "active" || prop === "type") continue
                     if(prop === "raw") prop = "_raw"
-                    filters.push({ prop: prop, regex: new RegExp(filter as string)})
+                    filters.push({ prop: prop, regex: new RegExp(filter)})
                 }
             }
         }

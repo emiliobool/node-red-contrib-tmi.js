@@ -2,11 +2,12 @@ import { Red, NodeProperties, Node } from "node-red";
 import { TwitchJsClientNode } from "./config";
 const TwitchJs = require("twitch-js")
 
-interface TwitchJsEventConfig extends NodeProperties {
+export interface TwitchJsEventConfig extends NodeProperties {
+    name: string;
     client: string;
     event: string;
-    [key: string]: string;
-    filter_active: string;
+    [key: string]: string | boolean;
+    filter_active: boolean;
     filter_type: string;
     filter_channel: string;
     filter_username: string;
@@ -29,7 +30,7 @@ module.exports = function(RED: Red) {
                     let prop = key.split("_")[1]
                     if(prop === "active" || prop === "type") continue
                     if(prop === "raw") prop = "_raw"
-                    filters.push({ prop: prop, regex: new RegExp(filter)})
+                    filters.push({ prop: prop, regex: new RegExp(filter as string)})
                 }
             }
         }

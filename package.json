@@ -20,19 +20,25 @@
     "twitch-js": "^2.0.0-beta.30"
   },
   "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.6",
     "@types/node-red": "^0.17.3",
+    "chai": "^4.2.0",
     "del": "^3.0.0",
     "gulp": "^4.0.0",
     "gulp-inject-string": "^1.1.2",
     "gulp-typescript": "^5.0.0",
+    "mocha": "^6.0.2",
+    "node-red": "^0.18.4",
     "node-red-node-test-helper": "^0.1.8",
+    "ts-node": "^8.0.2",
     "typescript": "^3.3.3333"
   },
   "scripts": {
     "install": "npm run build",
     "watch": "gulp watch",
     "build": "gulp build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/mocha/bin/mocha -r ts-node/register src/**/*.spec.ts"
   },
   "repository": {
     "type": "git",

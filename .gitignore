@@ -4,3 +4,4 @@ node_modules/**
 src/*.js
 src/icons/GlitchIcon_White_24px.png
 src/icons/GlitchIcon_White_32px.png
+.vscode/**

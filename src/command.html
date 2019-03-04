@@ -1,0 +1,78 @@
+<script type="text/javascript">
+    RED.nodes.registerType("twitchjs-command", {
+        category: "StreamingTools",
+        color: "#6441a5",
+        defaults: {
+            client: { type: "twitchjs-config" },
+            name: { value: "" },
+            channels: { value: "" },
+            users: { value: "" },
+            isRegular: { value: false },
+            isMod: { value: false },
+            isSub: { value: false },
+            isBroadcaster: { value: true },
+            badges: { value: "" },
+            badgesType: { value: "ANY" },
+            rawFilter: { value: "" },
+            command: { value: "" }
+        },
+        inputs: 0,
+        outputs: 1,
+        icon: "twitch-icon.png",
+        paletteLabel: "Bot Command",
+        label: function () {
+            return this.name || this.command || "Bot Command";
+        },
+        labelStyle: "twitchjs_node_label"
+    });
+</script>
+<script type="text/html" data-template-name="twitchjs-command">
+<div class="twitchjs-template">
+
+  <div class="form-row">
+      <label for="node-input-client"><i class="icon-tag"></i> Config</label>
+      <input type="text" id="node-input-client">
+  </div>
+ <div class="form-row">
+        <label for="node-input-channels"><i class="icon-tag"></i> Channels</label>
+        <input type="text" id="node-input-channels">
+</div>
+  <div class="form-row">
+        <label for="node-input-users"><i class="icon-tag"></i> Users</label>
+        <input type="text" id="node-input-users">
+</div>
+   <div class="form-row checkboxes">
+        <input type="checkbox" id="node-input-isRegular">
+        <label for="node-input-isRegular" style="width: auto">Regular</label>
+        <input type="checkbox" id="node-input-isMod">
+        <label for="node-input-isMod" style="width: auto">Moderator</label>
+        <input type="checkbox" id="node-input-isSub">
+        <label for="node-input-isSub"  style="width: auto">Subscriber</label>
+        <input type="checkbox" id="node-input-isBroadcaster">
+        <label for="node-input-isBroadcaster"  style="width: auto">Broadcaster</label>
+</div>
+   <div class="form-row" style="display: flex">
+      <label for="node-input-badges" >Badges</label>
+      <select id="node-input-badgesType" style="width: auto">
+        <option value="ANY">Any of:</option>
+        <option value="ALL">All of:</option>
+      </select>
+      <input type="text" id="node-input-badges">
+  </div> 
+
+  <div class="form-row">
+      <label for="node-input-rawFilter"><i class="icon-tag"></i> Raw Filter</label>
+      <input type="text" id="node-input-rawFilter">
+  </div>
+  <div class="form-row">
+        <label for="node-input-command"><i class="icon-tag"></i> Command</label>
+        <input type="text" id="node-input-command">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
+</div>
+</div>
+</script>
+<script type="text/html" data-help-name="twitchjs-command"></script>

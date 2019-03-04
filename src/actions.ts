@@ -1,5 +1,5 @@
 import { Red, NodeProperties, Node } from "node-red";
-import { TwitchJsClientNode } from "./twitchjs-client";
+import { TwitchJsClientNode } from "./config";
 // import TwitchJs from "twitch-js";
 const TwitchJs = require("twitch-js")
 
@@ -50,7 +50,9 @@ module.exports = function(RED: Red) {
           args = [topic, payload];
         }
         let returnValue: any = chat[command as string].apply(chat, args);
-        Promise.resolve(returnValue).then(payload => this.send({ payload }));
+        Promise.resolve(returnValue)
+            .then(payload => this.send({ payload }))
+            .catch(this.error);
       }
       this.on("input", input);
       if (command === "join") {

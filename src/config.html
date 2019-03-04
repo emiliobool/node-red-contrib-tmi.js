@@ -1,20 +1,25 @@
 <script type="text/javascript">
-    RED.nodes.registerType('twitchjs-client', {
+    RED.nodes.registerType('twitchjs-config', {
         category: 'config',
         defaults: {
+            name: { value: "" },
             username: { value: "" },
             token: { value: "" },
             clientId: { value: "" },
         },
         label: function () {
-            return this.username || this.clientId;
+            return this.name || this.username || this.token || this.clientId;
         }
     });
 </script>
 <style>
 
 </style>
-<script type="text/x-red" data-template-name="twitchjs-client">
+<script type="text/x-red" data-template-name="twitchjs-config">
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-config-input-name">
+    </div>
     <div class="form-row">
         <label for="node-config-input-username"><i class="icon-tag"></i> Username</label>
         <input type="text" id="node-config-input-username">

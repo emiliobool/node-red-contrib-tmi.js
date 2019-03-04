@@ -2,6 +2,7 @@ import { Red, Node, NodeProperties } from "node-red";
 import TwitchJs from "twitch-js";
 
 export interface TwitchJsClientConfig extends NodeProperties {
+    name: string;
   username: string;
   token: string;
   clientId: string;
@@ -16,10 +17,7 @@ interface TwitchJsInstances{
 let twitchjs_instances: TwitchJsInstances = {};
 
 module.exports = function(RED: Red) {
-  function TwitchJsClient(
-    this: TwitchJsClientNode,
-    config: TwitchJsClientConfig
-  ) {
+  function TwitchJsClient(this: TwitchJsClientNode, config: TwitchJsClientConfig) {
     RED.nodes.createNode(this, config);
     if (twitchjs_instances[this.id]) {
         twitchjs_instances[this.id].chat.removeAllListeners();
@@ -33,5 +31,5 @@ module.exports = function(RED: Red) {
     })
     twitchjs_instances[this.id] = this.twitchjs
   }
-  RED.nodes.registerType("twitchjs-client", TwitchJsClient);
+  RED.nodes.registerType("twitchjs-config", TwitchJsClient);
 };

@@ -1,14 +1,16 @@
 {
   "name": "node-red-contrib-twitchjs",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Node Red Nodes for TwitchJs",
   "main": "dist/index.js",
   "node-red": {
     "nodes": {
-      "twitchjs-client": "lib/twitchjs-client.js",
-      "twitchjs-event": "lib/twitchjs-event.js",
-      "twitchjs-commands": "lib/twitchjs-commands.js",
-      "twitchjs-api": "lib/twitchjs-api.js"
+      "twitchjs-config": "lib/config.js",
+      "twitchjs-events": "lib/events.js",
+      "twitchjs-actions": "lib/actions.js",
+      "twitchjs-api": "lib/api.js",
+      "twitchjs-command": "lib/command.js",
+      "twitchjs-css": "lib/css.js"
     }
   },
   "engines": {

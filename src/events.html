@@ -1,0 +1,121 @@
+<script type="text/javascript">
+    let ChatConstant = "{ChatConstants}"
+    RED.nodes.registerType("twitchjs-event", {
+        category: "StreamingTools",
+        color: "#6441a5",
+        defaults: {
+            client: {
+                type: "twitchjs-config"
+            },
+            name: {
+                value: ""
+            },
+            event: {
+                value: "ALL"
+            },
+            filter_active: {
+                value: false
+            },
+            filter_type: {
+                value: "AND"
+            },
+            filter_channel: {
+                value: ""
+            },
+            filter_username: {
+                value: ""
+            },
+            filter_command: {
+                value: ""
+            },
+            filter_message: {
+                value: ""
+            },
+            filter_timestamp: {
+                value: ""
+            },
+            filter_raw: {
+                value: ""
+            }
+        },
+        inputs: 0,
+        outputs: 1,
+        icon: "twitch-icon.png",
+        paletteLabel: "Chat Event",
+        // icon: "file.png",
+        label: function() {
+            if (this.filter_channel) {
+                return `${this.event} (${this.filter_channel})`;
+            } else {
+                return `${this.event}`;
+            }
+        },
+        labelStyle: "twitchjs_node_label",
+        oneditprepare: function() {
+            $("#node-input-event").empty();
+            const eventKeys = Object.keys(ChatConstants.EVENTS).sort();
+            for (let eventKey of eventKeys) {
+                $("#node-input-event").append(
+                    $(`<option value="${eventKey}">${eventKey}</option>`)
+                );
+            }
+            $("#node-input-event").val(this.event);
+        }
+    });
+</script>
+<script type="text/html" data-template-name="twitchjs-event">
+    <div class="twitchjs-template">
+        <div class="form-row">
+            <label for="node-input-client"><i class="icon-tag"></i> Config</label>
+            <input type="text" id="node-input-client">
+        </div>
+        <div class="form-row">
+            <label for="node-input-event"><i class="icon-tag"></i> Event</label>
+            <select id="node-input-event"></select>
+        </div>
+        <div class="form-row checkboxes">
+            <p><strong>RegEx Filters</strong></p>
+            <input type="checkbox" id="node-input-filter_active" class="">
+            <label for="node-input-filter_active" class="">Active</label>
+        </div>
+        <div class="form-row">
+            <label for="node-input-filter_active" class="">Type</label>
+            <select id="node-input-filter_type">
+      <option>AND</option>
+      <option>OR</option>
+    </select>
+        </div>
+        <div class="form-row">
+            <label for="node-input-filter_channel" class=""> Channel</label>
+            <input type="text" id="node-input-filter_channel" placeholder="channel">
+        </div>
+        <div class="form-row">
+            <label for="node-input-filter_username" class=""> Username</label>
+            <input type="text" id="node-input-filter_username" placeholder="username">
+        </div>
+        <div class="form-row">
+            <label for="node-input-filter_command" class=""> Command</label>
+            <input type="text" id="node-input-filter_command" placeholder="PRIVMSG">
+        </div>
+        <div class="form-row">
+            <label for="node-input-filter_message" class=""> Message</label>
+            <input type="text" id="node-input-filter_message" placeholder="">
+        </div>
+        <div class="form-row">
+            <label for="node-input-filter_timestamp" class=""> Timestamp</label>
+            <input type="text" id="node-input-filter_timestamp" placeholder="ISO date">
+        </div>
+        <div class="form-row">
+            <label for="node-input-filter_raw" class=""> Raw Message</label>
+            <input type="text" id="node-input-filter_raw" placeholder="mod=1|broadcaster/1">
+        </div>
+
+        <div class="form-row">
+            <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+            <input type="text" id="node-input-name">
+        </div>
+    </div>
+</script>
+<script type="text/html" data-help-name="twitchjs-event">
+    <p></p>
+</script>

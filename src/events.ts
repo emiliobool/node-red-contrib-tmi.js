@@ -1,5 +1,5 @@
 import { Red, NodeProperties, Node } from "node-red";
-import { TwitchJsClientNode } from "./twitchjs-client";
+import { TwitchJsClientNode } from "./config";
 const TwitchJs = require("twitch-js")
 
 interface TwitchJsEventConfig extends NodeProperties {
@@ -33,6 +33,7 @@ module.exports = function(RED: Red) {
                 }
             }
         }
+        // this.log(JSON.stringify(clientNode))
         clientNode.twitchjs.chat.on(TwitchJs.ChatConstants.EVENTS[config.event], payload => {
             if(filtering){
                 if(config.filter_type === "OR"){

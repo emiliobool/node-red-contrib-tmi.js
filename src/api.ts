@@ -1,5 +1,5 @@
 import { Red, NodeProperties, Node } from "node-red";
-import { TwitchJsClientNode } from "./twitchjs-client";
+import { TwitchJsClientNode } from "./config";
 import { FetchOptions } from "twitch-js/utils/fetch";
 
 interface TwitchJsAPIConfig extends NodeProperties {
@@ -10,7 +10,7 @@ interface TwitchJsAPIConfig extends NodeProperties {
 }
 
 module.exports = function(RED: Red) {
-    function TwitchJsEvent(this: Node, config: TwitchJsAPIConfig) {
+    function TwitchJsAPI(this: Node, config: TwitchJsAPIConfig) {
         RED.nodes.createNode(this, config);
         const clientNode = RED.nodes.getNode(config.client) as TwitchJsClientNode;
         this.on("input", msg => {
@@ -30,5 +30,5 @@ module.exports = function(RED: Red) {
                 .catch(error => this.error(JSON.stringify(error)))
         })
     }
-    RED.nodes.registerType("twitchjs-api", TwitchJsEvent);
+    RED.nodes.registerType("twitchjs-api", TwitchJsAPI);
 }

@@ -6,16 +6,15 @@ const del = require('del');
 
 const tsProject = ts.createProject('./tsconfig.json')
 
-const htmlTask = parallel([ 
+const htmlTask = parallel([
     () => src("src/*.html")
-            .pipe(inject.replace("{ChatConstants}", JSON.stringify(TwitchJs.ChatConstants)))
-            .pipe(inject.replace("{ ChatConstants }", JSON.stringify(TwitchJs.ChatConstants)))
-            .pipe(dest("lib")),
+    .pipe(inject.replace("\"{ChatConstants}\"", JSON.stringify(TwitchJs.ChatConstants)))
+    .pipe(dest("lib")),
     () => src('./src/icons/**')
-            .pipe(dest('./lib/icons'))
+    .pipe(dest('./lib/icons'))
 ])
 
-function jsTask(){
+function jsTask() {
     return src("src/*.ts")
         .pipe(tsProject())
         .pipe(dest("lib"))
@@ -23,11 +22,11 @@ function jsTask(){
 
 const buildTask = series(cleanTask, parallel([htmlTask, jsTask]))
 
-function watchTask(){
+function watchTask() {
     return watch(["src/*.html", "src/*.ts"], buildTask)
 }
 
-function cleanTask(){
+function cleanTask() {
     return del(["lib/**"])
 }
 

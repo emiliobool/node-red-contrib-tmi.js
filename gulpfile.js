@@ -15,7 +15,7 @@ const htmlTask = parallel([
 ])
 
 function jsTask() {
-    return src("src/*.ts")
+    return src(["src/*.ts", "!src/*.spec.ts"])
         .pipe(tsProject())
         .pipe(dest("lib"))
 }
@@ -23,7 +23,7 @@ function jsTask() {
 const buildTask = series(cleanTask, parallel([htmlTask, jsTask]))
 
 function watchTask() {
-    return watch(["src/*.html", "src/*.ts"], buildTask)
+    return watch(["src/*.html", "src/*.ts", "!src/*.spec.ts"], buildTask)
 }
 
 function cleanTask() {

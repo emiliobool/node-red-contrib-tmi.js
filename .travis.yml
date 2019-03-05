@@ -4,13 +4,12 @@ node_js:
   - "10"
   - "8"
 
-# script: 
-#   - npm run test
-
-# deploy:
-#   - provider: npm
-#     skip_cleanup: true 
-#     email: contact@emiliobool.com
-#     api_key: $NPM_TOKEN
-#     on: 
-#       tags: true
+jobs:
+  include:
+    - stage: release
+      node_js: lts/*
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script:
+          - npx semantic-release

@@ -2,7 +2,7 @@ import { Red, NodeProperties, Node } from "node-red";
 import { TwitchJsClientNode } from "./config";
 import { FetchOptions } from "twitch-js/utils/fetch";
 
-interface TwitchJsAPIConfig extends NodeProperties {
+export interface TwitchJsAPIConfig extends NodeProperties {
     client: string;
     method: string;
     topic: string;

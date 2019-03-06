@@ -11,25 +11,21 @@ export interface TwitchJsClientNode extends Node {
     twitchjs: TwitchJs;
 }
 
-interface TwitchJsInstances {
-    [key: string]: TwitchJs
-}
-let twitchjs_instances: TwitchJsInstances = {};
-
 module.exports = function (RED: Red) {
     function TwitchJsClient(this: TwitchJsClientNode, config: TwitchJsClientConfig) {
         RED.nodes.createNode(this, config);
-        if (twitchjs_instances[this.id]) {
-            twitchjs_instances[this.id].chat.removeAllListeners();
-            twitchjs_instances[this.id].chat.disconnect();
-            delete twitchjs_instances[this.id]
-        }
         this.twitchjs = new TwitchJs({
+            username: config.username,
             token: config.token,
             clientId: config.clientId,
-            username: config.username
+            log: {
+                level: 0
+            }
         })
-        twitchjs_instances[this.id] = this.twitchjs
+        this.on("close", () => {
+            this.twitchjs.chat.removeAllListeners();
+            this.twitchjs.chat.disconnect();
+        })
     }
     RED.nodes.registerType("twitchjs-config", TwitchJsClient);
 };

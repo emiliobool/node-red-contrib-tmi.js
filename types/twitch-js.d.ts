@@ -10,6 +10,7 @@ export interface TwitchJsOptions {
   username: string;
   chat?: ChatOptions;
   api?: ApiOptions;
+  log: any;
 }
 
 export default class TwitchJs {

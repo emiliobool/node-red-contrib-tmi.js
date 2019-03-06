@@ -1,21 +1,22 @@
 import "mocha"
 import { expect } from "chai"
 
-import { configNode } from "./config.spec"
 import {
-    helper,
+    configNode,
     outputNode,
     getNode,
-    load,
-    startServer,
-    unload,
-    stopServer,
-    beforeAndAfter,
+    flow,
+    nodes,
+    execute,
+    describeFlow,
+    nodeInput,
 } from "./bootstrap.spec"
 
 import { TwitchJsActionConfig } from "./actions"
+import { eventNode } from "./events.spec";
 const TwitchJsActions = require("./actions")
 const TwitchJsConfig = require("./config")
+const TwitchJsEvents = require("./events")
 
 interface TwitchJsActionNodeSpecification extends TwitchJsActionConfig {
     wires?: string[][]
@@ -42,46 +43,65 @@ function actionNode(
 }
 
 describe("ACTIONS", function(this: any) {
-    describe("connect, reconnect, disconnect", function() {
-        beforeAndAfter()
+
+    describeFlow("connect(), #CONNECTED", function() {
+        it("should always trigger CONNECT", function(done){
+            nodes(TwitchJsActions, TwitchJsConfig, TwitchJsEvents)
+            flow(
+                configNode(),
+                actionNode([], "connect", "twitchjs-connect"),
+                eventNode([["output"]], "event", "CONNECTED"),
+                outputNode(),
+            )
+            execute(function(){
+                nodeInput("output", (msg: any) => {
+                    expect(msg.payload.command).to.equal("CONNECTED")
+                    done()
+                })
+                getNode("connect").receive() 
+            })
+        })
+        it("should auto connect")
+    })
+
+    describeFlow("reconnect, disconnect", function() {
         it("should load connect, reconnect and disconnect", function(done) {
-            const flow = [
+            nodes(TwitchJsActions, TwitchJsConfig, TwitchJsEvents)
+            flow(
                 configNode(),
                 actionNode([["reconnect"]], "connect", "twitchjs-connect"),
                 actionNode([["disconnect"]], "reconnect", "twitchjs-reconnect"),
                 actionNode([["output"]], "disconnect", "twitchjs-disconnect"),
-                outputNode()
-            ]
-            load([TwitchJsActions, TwitchJsConfig], flow, function() {
+                outputNode(),
+            )
+            execute(function() {
                 getNode("connect").should.have.property("name", "name")
                 getNode("reconnect").should.have.property("name", "name")
                 getNode("disconnect").should.have.property("name", "name")
-                getNode("config").should.have.property("name", "name")
-                getNode("reconnect").on("input", (msg: any) => {
+                nodeInput("reconnect", (msg: any) => {
                     expect(msg).to.have.property("payload")
                     expect(msg.payload.command).to.equal("CONNECTED")
                 })
-                getNode("disconnect").on("input", (msg: any) => {
+                nodeInput("disconnect", (msg: any) => {
                     expect(msg.payload).to.be.an("array")
                 })
-                getNode("output").on("input", (msg: any) => {
+                nodeInput("output", (msg: any) => {
                     expect(msg).to.have.property("payload", undefined)
                     done()
                 })
                 getNode("connect").receive()
             })
         }).timeout(5000)
+    })
 
-        it("should trigger CONNECT")
-        it("should auto connect and auto join")
-    })
-    describe("join", function() {
+    describeFlow("join", function() {
         it("should join")
+        it("should autojoin")
     })
-    describe("part", function(){
+    describeFlow("part", function(){
         it("should part")
     })
-    describe("say", function(){
+    describeFlow("say", function(){
         it("should say")
     })
     describe("broadcast", function(){

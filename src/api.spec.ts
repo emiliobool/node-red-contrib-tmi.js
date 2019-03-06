@@ -1,16 +1,14 @@
 import { expect } from "chai"
 import "mocha"
 
-import { configNode } from "./config.spec"
 import {
-    helper,
+    configNode,
     outputNode,
     getNode,
-    load,
-    startServer,
-    unload,
-    stopServer,
-    beforeAndAfter
+    flow,
+    nodes,
+    execute,
+    describeFlow
 } from "./bootstrap.spec"
 
 import { TwitchJsAPIConfig } from "./api"
@@ -42,17 +40,16 @@ function apiNode(
 }
 
 describe("API", function(this: any) {
-    describe("GET", function(){
-        beforeAndAfter()
+    describeFlow("GET", function(){
         it("should request from configuration", done => {
-            const flow = [
+            nodes(TwitchJsAPI, TwitchJsConfig)
+            flow(
                 configNode(),
                 apiNode([["output"]], "api", "GET", "streams", {}),
                 outputNode()
-            ]
-            load([TwitchJsAPI, TwitchJsConfig], flow, function() {
+            )
+            execute(function() {
                 getNode("api").should.have.property("name", "name")
-                getNode("config").should.have.property("name", "name")
                 getNode("output").on("input", (msg: any) => {
                     expect(msg.payload).to.have.property("streams")
                     done()
@@ -62,8 +59,9 @@ describe("API", function(this: any) {
         })
         it("should request from msg")
     })
-    describe("POST", function(){
+    describeFlow("POST", function(){
+
     })
-    describe("PUT", function(){
+    describeFlow("PUT", function(){
     })
 })

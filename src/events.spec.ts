@@ -1,27 +1,25 @@
 import "mocha"
 import { expect } from "chai"
 
-import { configNode } from "./config.spec"
 import {
-    helper,
+    configNode,
     outputNode,
     getNode,
-    load,
-    startServer,
-    unload,
-    stopServer,
-    beforeAndAfter
+    flow,
+    nodes,
+    describeFlow,
+    execute
 } from "./bootstrap.spec"
 
 import { TwitchJsEventConfig } from "./events"
-const TwitchJsEvent = require("./events")
+const TwitchJsEvents = require("./events")
 const TwitchJsConfig = require("./config")
 
 interface TwitchJsEventNode extends TwitchJsEventConfig {
     wires?: string[][]
 }
 
-function eventNode(
+export function eventNode(
     wires: string[][],
     id: string,
     event: string,
@@ -53,17 +51,16 @@ function eventNode(
 }
 
 describe("EVENTS", function() {
-    describe("CONNECTED", function() {
-        beforeAndAfter()
+    describeFlow("CONNECTED", function() {
         it("should load and receive connected event", function(done) {
-            const flow = [
+            nodes(TwitchJsEvents, TwitchJsConfig)
+            flow(
                 configNode(),
                 eventNode([["output"]], "event", "CONNECTED"),
                 outputNode()
-            ]
-            load([TwitchJsEvent, TwitchJsConfig], flow, function() {
+            )
+            execute(function() {
                 getNode("event").should.have.property("name", "name")
-                getNode("config").should.have.property("name", "name")
                 getNode("config").twitchjs.chat.connect()
                 getNode("output").on("input", (msg: any) => {
                     expect(msg).to.have.property("payload")

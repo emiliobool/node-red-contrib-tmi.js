@@ -2,7 +2,7 @@ import { Red, NodeProperties, Node } from "node-red";
 import { TwitchJsClientNode } from "./config";
 const TwitchJs = require("twitch-js");
 
-interface TwitchJsCommandConfig extends NodeProperties {
+export interface TwitchJsCommandConfig extends NodeProperties {
     client: string;
     name: string;
     channels: string;
@@ -17,6 +17,7 @@ interface TwitchJsCommandConfig extends NodeProperties {
     badgesType: "ALL" | "ANY"; // default any
     rawFilter: string; // color=#6441A4
     command: string;
+    parseRules: string; // regexp
 }
 
 module.exports = function (RED: Red) {

@@ -4,6 +4,12 @@ node_js:
   - "10"
   - "8"
 
+notifications:
+  email:
+    recipients:
+      - contact@emiliobool.com
+    on_success: never 
+    on_failure: always 
 jobs:
   include:
     - stage: release

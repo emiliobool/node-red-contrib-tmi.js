@@ -41,8 +41,9 @@
   },
   "scripts": {
     "install": "npm run build",
+    "gulp": "gulp",
     "watch": "gulp watch",
-    "build": "gulp build",
+    "build": "npm run gulp",
     "test": "./node_modules/mocha/bin/mocha -r ts-node/register src/**/*.spec.ts",
     "semantic-release": "semantic-release"
   },

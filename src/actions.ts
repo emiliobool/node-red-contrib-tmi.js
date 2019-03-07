@@ -14,6 +14,7 @@ enum ActionMsgType {
     Payload = "Payload",
     Topic = "Topic"
 }
+// these represent the methods names and the name of the nodes
 export enum ActionTypes {
     connect = "connect",
     disconnect = "disconnect",
@@ -34,12 +35,12 @@ function stringify(payload: any) {
     }
 }
 module.exports = function(RED: Red) {
-    function registerType(command: ActionTypes, msgType: ActionMsgType) {
+    function registerType(actionType: ActionTypes, msgType: ActionMsgType) {
         function node(this: Node, config: TwitchJsActionConfig): void {
             RED.nodes.createNode(this, config)
             const clientNode = RED.nodes.getNode(config.client) as TwitchJsClientNode
             const chat = clientNode.twitchjs.chat
-            let input = (msg: any) => {
+            this.on("input", (msg: any) => {
                 let args: any[] = []
                 if (msgType === ActionMsgType.Payload) {
                     let payload = stringify(msg.payload || config.payload)
@@ -49,25 +50,28 @@ module.exports = function(RED: Red) {
                     let topic = msg.topic || config.topic
                     args = [topic, payload]
                 }
-                let returnValue: any = chat[command as string].apply(chat, args)
+                let returnValue: any = chat[actionType as string].apply(chat, args)
                 Promise.resolve(returnValue)
                     .then(payload => this.send({ payload }))
                     .catch(this.error)
-            }
-            this.on("input", input)
-            if (command === "join") {
+            })
+            if (actionType === ActionTypes.join) {
                 if (config.auto) {
                     chat.on(TwitchJs.ChatConstants.EVENTS.CONNECTED, () =>
-                        input({})
+                        chat.join(config.payload)
+                            .then(payload => this.send({ payload }))
+                            .catch(this.error)
                     )
                 }
-            } else if (command === "connect") {
+            } else if (actionType === ActionTypes.connect) {
                 if (config.auto) {
                     chat.connect()
+                        .then(payload => this.send({ payload }))
+                        .catch(this.error)
                 }
             }
         }
-        RED.nodes.registerType(`twitchjs-${command}`, node)
+        RED.nodes.registerType(`twitchjs-${actionType}`, node)
     }
 
     registerType(ActionTypes.connect, ActionMsgType.None)

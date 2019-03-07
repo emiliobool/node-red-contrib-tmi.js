@@ -43,7 +43,6 @@ function apiNode(
 describe("API", function(this: any) {
     describeFlow("GET", function(){
         it("should request from configuration", done => {
-            nodes(TwitchJsAPI, TwitchJsConfig)
             flow(
                 configNode(),
                 apiNode([["output"]], "api", "GET", "streams", {}),

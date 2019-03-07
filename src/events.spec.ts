@@ -19,44 +19,34 @@ interface TwitchJsEventNode extends TwitchJsEventConfig {
     wires?: string[][]
 }
 
-export function eventNode(
-    wires: string[][],
-    id: string,
-    event: string,
-    filter_active = false,
-    filter_type = "AND" as TwitchJsEventNode["filter_type"],
-    filter_channel = "",
-    filter_command = "",
-    filter_message = "",
-    filter_raw = "",
-    filter_timestamp = "",
-    filter_username = ""
-): TwitchJsEventNode {
-    return {
-        type: "twitchjs-event",
-        name: "name",
-        client: "config",
-        id,
-        event,
-        filter_active,
-        filter_type,
-        filter_channel,
-        filter_command,
-        filter_message,
-        filter_raw,
-        filter_timestamp,
-        filter_username,
-        wires
-    }
+export function eventNode(options = {}): TwitchJsEventNode {
+    return Object.assign(
+        {
+            type: "twitchjs-event",
+            name: "name",
+            client: "config",
+            id: "event",
+            event: "",
+            filter_active: false,
+            filter_type: "AND",
+            filter_channel: "",
+            filter_command: "",
+            filter_message: "",
+            filter_raw: "",
+            filter_timestamp: "",
+            filter_username: "",
+            wires: []
+        } as TwitchJsEventNode,
+        options
+    )
 }
 
 describe("EVENTS", function() {
     describeFlow("CONNECTED", function() {
         it("should load and receive connected event", function(done) {
-            nodes(TwitchJsEvents, TwitchJsConfig)
             flow(
                 configNode(),
-                eventNode([["output"]], "event", "CONNECTED"),
+                eventNode({ wires: [["output"]], event: "CONNECTED" }),
                 outputNode()
             )
             execute(function() {
@@ -70,5 +60,8 @@ describe("EVENTS", function() {
                 })
             })
         })
+    })
+    describeFlow("PRIVMSG", function(){
+
     })
 })

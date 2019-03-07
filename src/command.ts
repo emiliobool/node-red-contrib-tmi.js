@@ -10,7 +10,7 @@ export interface TwitchJsCommandConfig extends NodeProperties {
     isRegular: boolean;
     isMod: boolean;
     isSub: boolean;
-    isBroadcaster: boolean; // true
+    isBroadcaster: boolean; 
     badges: string; // admin, bits/100000, broadcaster/1, global_mod/1, moderator/1, subscriber/12,
     //staff/1, turbo/1, vip/1, twitchcon2018/1, partner/1, bitsLeader/1, bitsCharity/1
     // sub-gifter/1, premium/1
@@ -38,7 +38,9 @@ module.exports = function (RED: Red) {
                     if (!users.length || users.includes(event.username)) {
                         // check for user type
                         if (!users.length || users.includes(event.username)) {
-                            const userTypeCondition = (config.isRegular && (!event.tags.mod && !event.tags.badges.subscriber && !event.tags.badges.broadcaster)) ||
+                            const userTypeCondition = 
+                                (!config.isRegular && !config.isMod && !config.isSub && !config.isBroadcaster) || 
+                                (config.isRegular && (!event.tags.mod && !event.tags.badges.subscriber && !event.tags.badges.broadcaster)) ||
                                 (config.isMod && event.tags.mod) == true ||
                                 (config.isSub && event.tags.badges.subscriber) == true ||
                                 (config.isBroadcaster && event.tags.badges.broadcaster) == true

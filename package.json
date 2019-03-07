@@ -40,7 +40,6 @@
     "semantic-release": "^15.13.3"
   },
   "scripts": {
-    "install": "npm run build",
     "watch": "npm run gulp -- watch",
     "build": "npm run gulp -- build",
     "test": "npm run mocha -- -r ts-node/register src/**/*.spec.ts",

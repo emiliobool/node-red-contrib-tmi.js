@@ -8,7 +8,8 @@ import {
     flow,
     nodes,
     execute,
-    describeFlow
+    describeFlow,
+    nodeInput
 } from "./bootstrap.spec"
 
 import { TwitchJsAPIConfig } from "./api"
@@ -50,7 +51,7 @@ describe("API", function(this: any) {
             )
             execute(function() {
                 getNode("api").should.have.property("name", "name")
-                getNode("output").on("input", (msg: any) => {
+                nodeInput("output", (msg: any) => {
                     expect(msg.payload).to.have.property("streams")
                     done()
                 })

@@ -42,7 +42,8 @@
   "scripts": {
     "watch": "npm run gulp -- watch",
     "build": "npm run gulp -- build",
-    "prepublish": "npm run build && rm .gitignore",
+    "prepare": "npm run build",
+    "prepublishOnly": "rm ./.gitignore",
     "test": "npm run mocha -- -r ts-node/register src/**/*.spec.ts",
     "mocha": "mocha",
     "gulp": "gulp",

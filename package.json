@@ -20,7 +20,8 @@
     "twitch-js": "^2.0.0-beta.30"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "tag": "next"
   },
   "devDependencies": {
     "@types/chai": "^4.1.7",

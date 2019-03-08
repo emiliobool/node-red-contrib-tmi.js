@@ -89,17 +89,30 @@ export function outputNode(options = {}): any {
     )
 }
 
-export const channel1 = process.env.TWITCHJS_TEST_CHANNEL1
+export const CHANNEL1 = process.env.TWITCHJS_TEST_CHANNEL1
+export const CHANNEL2 = process.env.TWITCHJS_TEST_CHANNEL2
+export const USERNAME1 = process.env.TWITCHJS_TEST_USERNAME1
+export const USERNAME2 = process.env.TWITCHJS_TEST_USERNAME2
 
-export function configNode(options = {}): TwitchJsClientConfig {
+export function configNode(options = {}, user = 1): TwitchJsClientConfig {
+    let username = process.env.TWITCHJS_TEST_USERNAME1
+    let token = process.env.TWITCHJS_TEST_TOKEN1
+    let clientId = process.env.TWITCHJS_TEST_CLIENTID1
+
+    if(user == 2){
+        username = process.env.TWITCHJS_TEST_USERNAME2
+        token = process.env.TWITCHJS_TEST_TOKEN2
+        clientId = process.env.TWITCHJS_TEST_CLIENTID2
+    }
+
     return Object.assign(
         {
             id: "config",
             type: "twitchjs-config",
             name: "name",
-            username: process.env.TWITCHJS_TEST_USERNAME || "",
-            token: process.env.TWITCHJS_TEST_TOKEN || "",
-            clientId: process.env.TWITCHJS_TEST_CLIENTID || ""
+            username: username || "",
+            token: token || "",
+            clientId: clientId || ""
         },
         options
     )

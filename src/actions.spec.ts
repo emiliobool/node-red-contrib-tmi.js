@@ -8,11 +8,12 @@ import {
     flow,
     execute,
     describeFlow,
-    nodeInput
+    nodeInput,
+    CHANNEL1
 } from "./bootstrap.spec"
 
 import { TwitchJsActionConfig } from "./actions"
-import { eventNode } from "./events.spec"
+const TwitchJs = require("twitch-js")
 
 interface TwitchJsActionNodeSpecification extends TwitchJsActionConfig {
     wires?: string[][]
@@ -135,16 +136,74 @@ describe("ACTIONS", function(this: any) {
             getNode("connect").receive()
         })
     })
-
     describeFlow("join", function() {
         it("should join")
         it("should autojoin")
     })
+    describeFlow("twitchjs-send -> output", function() {
+        it("should send message")
+    })
+
     describeFlow("part", function() {
         it("should part")
     })
     describeFlow("say", function() {
-        it("should say")
+        it("should load", function(done){
+            flow(
+                configNode({
+                    id: "config1"
+                }),
+                configNode({
+                    id: "config2"
+                }, 2),
+                actionNode({
+                    id: "say",
+                    type: "twitchjs-say",
+                    client: "config1",
+                    wires: [["output"]]
+                }),
+                outputNode(),
+                // eventNode({
+                //     id: "event",
+                //     event: "PRIVMSG",
+                //     client: "config2",
+                //     wires: [["event-output"]]
+                // }),
+                // outputNode({
+                //     id: "event-output"
+                // }),
+            )
+            execute(function() {
+                getNode("say").should.have.property("name", "name")
+                // done()
+                Promise.all([
+                    getNode("config1").twitchjs.chat.connect()
+                        .then(() => getNode("config1").twitchjs.chat.join(CHANNEL1)),
+                    getNode("config2").twitchjs.chat.connect()
+                        .then(() => getNode("config2").twitchjs.chat.join(CHANNEL1))
+                ]).finally(done)
+            })
+            // after(function(done){
+                
+            // })
+        })
+        it("should send message", function(done){
+            nodeInput("output", function(msg: any){
+                expect(msg.payload.command).to.equal("USERSTATE")
+                done()
+            })
+            getNode("say").receive({
+                topic: CHANNEL1,
+                payload: "test message"
+            })
+        })
+        it("should receive message", function(done){
+            getNode("config2").twitchjs.chat.on(TwitchJs.ChatConstants.EVENTS.PRIVATE_MESSAGE, function(payload: any){
+                expect(payload.message).to.equal("receive message")
+                done()
+            })
+            getNode("config1").twitchjs.chat.say(CHANNEL1, "receive message")
+        })
     })
     describe("broadcast", function() {
         it("should broadcast")

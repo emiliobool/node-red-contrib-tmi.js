@@ -11,9 +11,8 @@ import {
     execute
 } from "./bootstrap.spec"
 
-import { TwitchJsEventConfig } from "./events"
-const TwitchJsEvents = require("./events")
-const TwitchJsConfig = require("./config")
+import { TwitchJsEventConfig } from "./events";
+
 
 interface TwitchJsEventNode extends TwitchJsEventConfig {
     wires?: string[][]

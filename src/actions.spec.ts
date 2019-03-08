@@ -37,7 +37,7 @@ export function actionNode(options = {}): TwitchJsActionNodeSpecification {
 
 describe("ACTIONS", function(this: any) {
 
-    describeFlow("twitchjs-connect(manual) -> output", function() {
+    describeFlow("connect(manual) -> output", function() {
         it("should load", function(done) {
             flow(
                 configNode(),
@@ -63,7 +63,7 @@ describe("ACTIONS", function(this: any) {
         })
     })
 
-    describeFlow("twitchjs-connect(auto) -> output", function() {
+    describeFlow("connect(auto) -> output", function() {
         it("should load & autoconnect", function(done) {
             flow(
                 configNode(),
@@ -91,7 +91,7 @@ describe("ACTIONS", function(this: any) {
         })
     })
 
-    describeFlow("twitchjs-connect -> twitchjs-reconnect -> twitchjs-disconnect -> output", function() {
+    describeFlow("connect -> reconnect -> disconnect -> output", function() {
         it("should load", function(done) {
             flow(
                 configNode(),
@@ -140,7 +140,7 @@ describe("ACTIONS", function(this: any) {
         it("should join")
         it("should autojoin")
     })
-    describeFlow("twitchjs-send -> output", function() {
+    describeFlow("send -> output", function() {
         it("should send message")
     })
 
